@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -7,8 +7,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# Create and switch to non-root user for security
-RUN groupadd -r dockeruser && useradd -r -g dockeruser dockeruser
+# Create docker group with same GID as host (typically 999 or 998)
+RUN groupadd -g 999 docker
+
+# Create and switch to non-root user for security and add to docker group
+RUN useradd -r -G docker dockeruser
 
 # Set the working directory in the container
 WORKDIR /app
