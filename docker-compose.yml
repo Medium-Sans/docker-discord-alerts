@@ -7,15 +7,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: always
-    group_add:
-      - 999
     environment:
       - DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1328804485937758228/vzDkgKi55dp3vbCtbgyP-CLyFh90-UB_j41-GYhlvJADRWdwyEVkNoqJGrG9Od2B_IrR
       - MONITORED_CONTAINERS=${MONITORED_CONTAINERS:-*}
       - NOTIFICATION_LEVEL=${NOTIFICATION_LEVEL:-all}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
-    logging:
-      driver: json-file
-      options:
-        max-size: 10m
-        max-file: 3
